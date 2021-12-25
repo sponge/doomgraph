@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "id": "doom",
+      "x": 500,
+      "y": 50,
+      "title": "DOOM",
+      "img": "testpic.png",
+      "date": "1993",
+      "description": "this is the first!",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Versions_of_Doom_and_Doom_II#v1.2"}
+      ]
+    },
+    {
+      "id": "heretic",
+      "x": 200,
+      "y": 200,
+      "title": "Heretic",
+      "img": "testpic.png",
+      "date": "1993",
+      "parentVersion": "DOOM v1.2",
+      "description": "it's alright",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Heretic"}
+      ]
+    },
+    {
+      "id": "doom2",
+      "x": 500,
+      "y": 200,
+      "title": "DOOM II",
+      "img": "testpic.png",
+      "date": "1994",
+      "description": "it's got another shotgun",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Versions_of_Doom_and_Doom_II#v1.666"}
+      ]
+    },
+    {
+      "id": "jaguar",
+      "x": 800,
+      "y": 200,
+      "title": "DOOM (Jaguar)",
+      "img": "testpic.png",
+      "date": "1993",
+      "parentVersion": "DOOM v1.2",
+      "description": "it's not good",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Atari_Jaguar"}
+      ]
+    }
+  ],
+  "edges": [
+    { "from": "doom", "to": "heretic" },
+    { "from": "doom", "to": "doom2" },
+    { "from": "doom", "to": "jaguar" }
+  ]
+}
