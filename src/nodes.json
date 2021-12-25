@@ -49,11 +49,37 @@
       "hrefs": [
         {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Atari_Jaguar"}
       ]
+    },
+    {
+      "id": "linuxdoom",
+      "x": 1100,
+      "y": 200,
+      "title": "Linux DOOM v1.10",
+      "img": "testpic.png",
+      "date": "1997",
+      "description": "gross linux nerd stuff",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Linux_Doom"}
+      ]
+    },
+    {
+      "id": "chocolatedoom",
+      "x": 1000,
+      "y": 350,
+      "title": "Chocolate Doom",
+      "img": "testpic.png",
+      "date": "some time",
+      "description": "it's like the original game, but with chocolate",
+      "hrefs": [
+        {"title": "DoomWiki", "url": "https://doomwiki.org/wiki/Chocolate_Doom"}
+      ]
     }
   ],
   "edges": [
     { "from": "doom", "to": "heretic" },
     { "from": "doom", "to": "doom2" },
-    { "from": "doom", "to": "jaguar" }
+    { "from": "doom", "to": "jaguar" },
+    { "from": "doom", "to": "linuxdoom" },
+    { "from": "linuxdoom", "to": "chocolatedoom" }
   ]
 }

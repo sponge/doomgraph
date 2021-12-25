@@ -8,9 +8,21 @@
 
 	onMount(() => {
 		hashChange();
+
+		for (let node of graph.nodes) {
+			node.parents = getParents(node.id);
+			node.children = getChildren(node.id);
+			node.recursiveParents = getParentsRecursive(node.id).map(n => n.id);
+		}
+
+		console.log(graph);
 	});
 
 	function hashChange() {
+		if (location.hash.length <= 1) {
+			clearNode();
+		}
+
 		selectNode(location.hash.substring(1));
 	}
 
@@ -22,8 +34,10 @@
 			selected = node;
 		}
 
-		selected.parents = getParents(selected.id);
-		selected.children = getChildren(selected.id);
+		if (!selected) {
+			selected = null;
+			return;
+		}
 	}
 
 	function clearNode() {
@@ -40,6 +54,30 @@
 
 	function getNode(id) {
 		return graph.nodes.find(node => node.id == id);
+	}
+
+	function getParentsRecursive(id) {
+		const node = getNode(id);
+		let parents = [];
+
+		if (!node) {
+			return parents;
+		}
+
+		for (let parent of getParents(id)) {
+			parents.push(parent);
+			parents = parents.concat(getParentsRecursive(parent.id));
+		}
+
+		return parents;
+	}
+
+	function isNodeActive(id) {
+		if (!selected) {
+			return true;
+		}
+
+		return selected?.recursiveParents?.includes(id) || id == selected?.id
 	}
 </script>
 
@@ -94,8 +132,16 @@
 		stroke-width: 2pt;
 	}
 
+	.node-container path.inactive {
+		opacity: 0.1;
+	}
+
 	.node {
 		cursor: pointer;
+	}
+
+	.node.inactive {
+		opacity: 0.1;
 	}
 
 	.node text {
@@ -115,9 +161,10 @@
 	{#each graph.nodes as node, i}
 		<g class = "node-container">
 			{#each getChildren(node.id) as link}
-				<path d="M{node.x} {node.y} v{(link.y - node.y)/2} H{link.x} V{link.y}"/>
+				{console.log(link.id, isNodeActive(link.id))}
+				<path class={isNodeActive(link.id) ? 'active' : selected ? 'inactive' : 'normal'} d="M{node.x} {node.y} v{(link.y - node.y)/2} H{link.x} V{link.y}"/>
 			{/each}
-			<g class="node" on:click={e => location.hash = node.id} transform="translate({node.x - (nodeWidth/2)},{node.y - (nodeHeight/2)})">
+			<g class="node {isNodeActive(node.id) ? 'active' : selected ? 'inactive' : 'normal'}" on:click={e => location.hash = node.id} transform="translate({node.x - (nodeWidth/2)},{node.y - (nodeHeight/2)})">
 				<rect x={0} y={0} width={nodeWidth} height={nodeHeight} />
 				<text x={10} y={30}>{node.title}</text>
 			</g>
@@ -128,7 +175,7 @@
 {#if selected}
 	<div class="info"> 
 		<header style="background-image: linear-gradient(to top, rgba(20, 20, 20, 1) 25%, rgba(20, 20, 20, 0)), url('{selected.img}')">
-			<button on:click={clearNode}>x</button>
+			<button on:click={() => { location.hash = ''}}>x</button>
 			<h1>{selected.title}</h1>
 			<p>{selected.date}</p>
 		</header>
