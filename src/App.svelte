@@ -190,20 +190,20 @@
 				</ul>
 			{/if}
 
-			{#if selected.children.length}
-				Ports based on this:
-				<ul>
-					{#each selected.children as child}
-						<li><a href={'#' + child.id}>{child.title}</a></li>
-					{/each}
-				</ul>
-			{/if}
-
 			{#if selected.parents.length}
 				Port based on:
 				<ul>
 					{#each selected.parents as parent}
 						<li><a href={'#' + parent.id}>{parent.title}</a></li>
+					{/each}
+				</ul>
+			{/if}
+
+			{#if selected.children.length}
+				Ports based on this:
+				<ul>
+					{#each selected.children as child}
+						<li><a href={'#' + child.id}>{child.title}</a></li>
 					{/each}
 				</ul>
 			{/if}
