@@ -1,9 +1,14 @@
 <script>
+	import { onMount } from 'svelte';
 	import graph from './nodes.json';
 
 	let nodeWidth = 250;
 	let nodeHeight = 50;
 	let selected = null;
+
+	onMount(() => {
+		hashChange();
+	});
 
 	function hashChange() {
 		selectNode(location.hash.substring(1));
