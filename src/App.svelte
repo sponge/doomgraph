@@ -42,6 +42,7 @@
 
 	function clearNode() {
 		selected = null;
+		location.hash = '';
 	}
 
 	function getParents(id) {
@@ -157,13 +158,13 @@
 
 <svelte:window on:hashchange={hashChange} />
 
-<svg width="4000" height="1100" viewBox="0 0 4000 1100">
+<svg width="4000" height="1100" viewBox="0 0 4000 1100" on:click={clearNode}>
 	{#each graph.nodes as node, i}
 		<g class = "node-container">
 			{#each getChildren(node.id) as link}
 				<path class={isNodeActive(link.id) ? 'active' : selected ? 'inactive' : 'normal'} d="M{node.x} {node.y} v{(link.y - node.y)/2} H{link.x} V{link.y}"/>
 			{/each}
-			<g class="node {isNodeActive(node.id) ? 'active' : selected ? 'inactive' : 'normal'}" on:click={e => location.hash = node.id} transform="translate({node.x - (nodeWidth/2)},{node.y - (nodeHeight/2)})">
+			<g class="node {isNodeActive(node.id) ? 'active' : selected ? 'inactive' : 'normal'}" on:click|stopPropagation={e => location.hash = node.id} transform="translate({node.x - (nodeWidth/2)},{node.y - (nodeHeight/2)})">
 				<rect x={0} y={0} width={nodeWidth} height={nodeHeight} />
 				<text x={10} y={30}>{node.title}</text>
 			</g>
@@ -174,7 +175,6 @@
 {#if selected}
 	<div class="info"> 
 		<header style="background-image: linear-gradient(to top, rgba(20, 20, 20, 1) 25%, rgba(20, 20, 20, 0)), url('{selected.img}')">
-			<button on:click={() => { location.hash = ''}}>x</button>
 			<h1>{selected.title}</h1>
 			<p>{selected.date}</p>
 		</header>
