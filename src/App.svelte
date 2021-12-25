@@ -4,7 +4,7 @@
 
 	let nodeWidth = 250;
 	let nodeHeight = 50;
-	let selected = null;
+	let selected = undefined;
 
 	onMount(() => {
 		hashChange();
@@ -35,7 +35,7 @@
 		}
 
 		if (!selected) {
-			selected = null;
+			selected = undefined;
 			return;
 		}
 	}
@@ -77,7 +77,7 @@
 			return true;
 		}
 
-		return selected?.recursiveParents?.includes(id) || id == selected?.id
+		return selected.recursiveParents.includes(id) || id == selected.id
 	}
 </script>
 
@@ -133,7 +133,7 @@
 	}
 
 	.node-container path.inactive {
-		opacity: 0.1;
+		opacity: 0;
 	}
 
 	.node {
@@ -161,7 +161,6 @@
 	{#each graph.nodes as node, i}
 		<g class = "node-container">
 			{#each getChildren(node.id) as link}
-				{console.log(link.id, isNodeActive(link.id))}
 				<path class={isNodeActive(link.id) ? 'active' : selected ? 'inactive' : 'normal'} d="M{node.x} {node.y} v{(link.y - node.y)/2} H{link.x} V{link.y}"/>
 			{/each}
 			<g class="node {isNodeActive(node.id) ? 'active' : selected ? 'inactive' : 'normal'}" on:click={e => location.hash = node.id} transform="translate({node.x - (nodeWidth/2)},{node.y - (nodeHeight/2)})">
