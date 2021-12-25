@@ -87,26 +87,20 @@
 		background-color: transparent;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1 {
 		padding: 0;
 		margin: 0;
 	}
 
 	.info {
-		box-sizing: border-box;
 		position: fixed;
-		right: 1em;
-		top: 1em;
+		right: 0;
+		top: 0;
 		width: 30em;
 		height: 100%;
+		margin: 0;
 		background-color: rgba(20, 20, 20, 1);
 		border: 1px solid black;
-	}
-
-	.info button {
-		position: absolute;
-		top: 0;
-		right: 0;
 	}
 
 	.info header {
